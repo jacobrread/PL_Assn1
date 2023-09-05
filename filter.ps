@@ -1,0 +1,67 @@
+% /filter {
+
+% } def
+
+
+% Set the page size
+72 72 scale
+300 500 translate
+
+% Define colors
+/DarkGray { 0.2 0.2 0.2 setrgbcolor } def
+/White { 1 1 1 setrgbcolor } def
+/Orange { 1 0.5 0 setrgbcolor } def
+
+% Draw the body of the snowman
+White
+300 100 40 0 360 arc
+fill
+300 240 60 0 360 arc
+fill
+300 360 80 0 360 arc
+fill
+
+% Draw the eyes
+DarkGray
+260 375 5 0 360 arc
+fill
+340 375 5 0 360 arc
+fill
+
+% Draw the mouth
+0.05 setlinewidth
+300 355 20 0 180 arc
+stroke
+
+% Draw the nose
+Orange
+300 385 5 0 360 arc
+fill
+
+% Draw the arms
+2 setlinewidth
+270 310 250 0 45 arc
+stroke
+330 310 250 135 180 arc
+stroke
+
+% Draw the hat
+DarkGray
+240 420 120 0 180 arc
+fill
+240 420 20 0 360 arc
+fill
+360 420 20 0 360 arc
+fill
+220 420 40 0 360 arc
+fill
+380 420 40 0 360 arc
+fill
+
+% Show the result
+showpage
+You can copy and paste this code into a PostScript interpreter or editor to view and modify the snowman as needed.
+
+
+
+
