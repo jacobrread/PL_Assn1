@@ -1,3 +1,21 @@
-/fractal { 
+% /fractal { 
 
-} def
+% } def
+
+200 400 translate         % move origin to near center of page
+% First draw the circle for the head.
+newpath
+0 0 100 0 360 arc       % draw a circle of radius 100
+closepath stroke
+% Next let's draw the left eye
+newpath 
+-35 25 10 0 360 arc 
+fill                      % fill closes the current path
+% Draw the right eye
+newpath 
+35 25 10 0 360 arc 
+fill   
+% Draw the mouth 
+0 30 100 220 320 arc 
+stroke
+

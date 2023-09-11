@@ -1,3 +1,52 @@
+% a b d r hypotrochoid
+
+% radiusOfBigCircle radiusOfSmallCircle lengthOfArm numberOfTimesAround hypotrochoid
+
+% The hypotrochoid is produced by circling for t = 0..360*r degrees using the following formulas.
+
+% x(t) = ((a - b) * cos(t)) + (d * cos( ((a-b) * t)/b ))
+% y(t) = ((a - b) * sin(t)) - (d * sin( ((a-b) * t)/b ))
+
+% Draw a line by using lineto to continue the line from the previous position. For example
+
 /hypotrochoid {
+    /numberOfTimesAround exch def
+    /lengthOfArm exch def
+    /radiusOfSmallCircle exch def
+    /radiusOfBigCircle exch def
+
+    numberOfTimesAround 0.360 mul
+    /t exch def
+    t
+
+    % x(t) = ((radiusOfBigCircle - radiusOfSmallCircle) * cos(t)) + (lengthOfArm * cos( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle))
+    radiusOfBigCircle radiusOfSmallCircle sub % radiusOfBigCircle - radiusOfSmallCircle
+    t cos mul % ((radiusOfBigCircle - radiusOfSmallCircle) * cos(t))
+    /xLeftOfPlus exch def
+
+    radiusOfBigCircle radiusOfSmallCircle sub % radiusOfBigCircle - radiusOfSmallCircle
+    t mul % ((radiusOfBigCircle - radiusOfSmallCircle) * t)
+    radiusOfSmallCircle div % ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle
+    cos % cos( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle)
+    lengthOfArm mul % lengthOfArm * cos( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle)
+    /xRightOfPlus exch def
+
+    xLeftOfPlus xRightOfPlus add % ((radiusOfBigCircle - radiusOfSmallCircle) * cos(t)) + (lengthOfArm * cos( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle))
+
+    % y(t) = ((radiusOfBigCircle - radiusOfSmallCircle) * sin(t)) - (lengthOfArm * sin( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle))
+    radiusOfBigCircle radiusOfSmallCircle sub % radiusOfBigCircle - radiusOfSmallCircle
+    t sin mul % ((radiusOfBigCircle - radiusOfSmallCircle) * sin(t))
+    /yLeftOfMinus exch def
+
+    radiusOfBigCircle radiusOfSmallCircle sub % radiusOfBigCircle - radiusOfSmallCircle
+    t mul % ((radiusOfBigCircle - radiusOfSmallCircle) * t)
+    radiusOfSmallCircle div % ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle
+    sin % sin( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle)
+    lengthOfArm mul % lengthOfArm * sin( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle)
+    /yRightOfMinus exch def
+
+    yLeftOfMinus yRightOfMinus sub % ((radiusOfBigCircle - radiusOfSmallCircle) * sin(t)) - (lengthOfArm * sin( ((radiusOfBigCircle - radiusOfSmallCircle) * t) / radiusOfSmallCircle))
 
 } def
+
+100 25 40 1 hypotrochoid

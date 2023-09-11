@@ -1,4 +1,29 @@
-(filter.ps) run
+/filter {
+    1 dict begin
+        count 1 gt % ensures this code is only run if there is something on the stack
+        { % recursive case, more than one thing on the stack
+            /function exch def
+            /currentValue exch def
+
+            count 0 gt
+            { % we don't want to add a duplicate to the stack if there is only one value on the stack
+                /function load filter % adds the desired duplicate value to the stack so the next level of recursion can use it
+            }
+            if
+
+            % I would suggest not popping a value if the filter function returns true.
+            % The currentValue is not on the stack at that point, so pop actually pops something else.
+            currentValue
+            /function load exec
+            { } 
+            {
+                currentValue
+            }
+            ifelse % pop the value if it doesn't match the filter, otherwise leave it on the stack
+        }
+        if
+    end
+} def
 
 /Times-Roman findfont        % Find the font 
 14 scalefont                 % Make it a bigger font

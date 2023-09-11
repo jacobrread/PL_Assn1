@@ -1,3 +1,61 @@
 /reverseTopK {
+    1 dict begin
+        count 1 gt % ensures this code is only run if there is something on the stack
+        { % recursive case, more than one thing on the stack
 
+            /swapPoint exch def % the point at which the stack will be swapped
+
+            /beforValues [] def
+            /afterValues [] def
+
+            {
+                dup % Duplicate the top value for processing (optional)\
+
+                % Your code to process the value goes here
+                pop swapPoint eq
+                {
+                    pop
+                }
+                {
+                  beforValues length 1 add -1 roll put % put the value into the array
+                }
+                ifelse
+
+            } loop
+
+            % /topElements [] def
+            % /reverseValue exch def % the value used to reverse the stack
+            % /currentValue exch def % the current value on the stack
+            % currentValue reverseValue eq
+            % {
+            %     {
+            %         pop tempArr exch
+            %     } repeat
+            % }
+            % if
+
+            % (divider)
+
+            % % Push the elements from the temporary array back onto the stack to reverse their order
+            % tempArr {
+            %     exch
+            % } forall
+        }
+        if
+    end
 } def
+
+reverseTopK
+
+%  1 2 3 4 5 reverseTopK
+
+% treat it as if n == count
+
+% n m roll      % move the top m values on the stack into the nth 
+                %  stack position from the top
+
+%    1 2 3 4 5 3 reverseTopK   % stack will become 1 2 5 4 3
+%    1 2 3 4 5 5 reverseTopK   % stack will become 5 4 3 2 1
+%    2 1 reverseTopK           % stack will become 2
+%    3 reverseTopK             % stack will be empty
+%    3 2 1 reverseTopK         % stack will become 3 2 

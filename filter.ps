@@ -1,57 +1,26 @@
-% Set the page size
-72 72 scale
-300 500 translate
+/filter {
+    1 dict begin
+        count 1 gt % ensures this code is only run if there is something on the stack
+        { % recursive case, more than one thing on the stack
+            /function exch def
+            /currentValue exch def
 
-% Define colors
-/DarkGray { 0.2 0.2 0.2 setrgbcolor } def
-/White { 1 1 1 setrgbcolor } def
-/Orange { 1 0.5 0 setrgbcolor } def
+            count 0 gt
+            { % we don't want to add a duplicate to the stack if there is only one value on the stack
+                /function load filter % adds the desired duplicate value to the stack so the next level of recursion can use it
+            }
+            if
 
-% Draw the body of the snowman
-White
-300 100 40 0 360 arc
-fill
-300 240 60 0 360 arc
-fill
-300 360 80 0 360 arc
-fill
-
-% Draw the eyes
-DarkGray
-260 375 5 0 360 arc
-fill
-340 375 5 0 360 arc
-fill
-
-% Draw the mouth
-0.05 setlinewidth
-300 355 20 0 180 arc
-stroke
-
-% Draw the nose
-Orange
-300 385 5 0 360 arc
-fill
-
-% Draw the arms
-2 setlinewidth
-270 310 250 0 45 arc
-stroke
-330 310 250 135 180 arc
-stroke
-
-% Draw the hat
-DarkGray
-240 420 120 0 180 arc
-fill
-240 420 20 0 360 arc
-fill
-360 420 20 0 360 arc
-fill
-220 420 40 0 360 arc
-fill
-380 420 40 0 360 arc
-fill
-
-% Show the result
-showpage
+            % I would suggest not popping a value if the filter function returns true.
+            % The currentValue is not on the stack at that point, so pop actually pops something else.
+            currentValue
+            /function load exec
+            { } 
+            {
+                currentValue
+            }
+            ifelse % pop the value if it doesn't match the filter, otherwise leave it on the stack
+        }
+        if
+    end
+} def

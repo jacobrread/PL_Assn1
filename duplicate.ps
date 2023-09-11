@@ -5,6 +5,11 @@
             
             /duplicateValue exch def
             /currentValue exch def
+
+            count 0 gt{ % we don't want to add a duplicate to the stack if there is only one value on the stack
+                duplicateValue duplicate % adds the value to duplicate to the stack so the next level of recursion can use it
+            }
+            if
             
             % on the way back out of the recursion check to see if the value is the one that needs to be duplicated
                 % if it is then put 2 copies of the value on the stack
@@ -22,6 +27,3 @@
         if
     end
 } def
-
-1 2 3 4 3 4 5 6
-3 duplicate
